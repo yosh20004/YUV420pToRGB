@@ -32,19 +32,6 @@ void store_single_pixel_raw(
 );
 
 
-void store_single_pixel_raw(
-    std::vector<unsigned char>& rgb_byte_array,
-    int r_val,
-    int g_val,
-    int b_val,
-    int base_idx
-) {
-    // 调用者负责边界检查 本函数不负责
-    rgb_byte_array[base_idx + 0] = static_cast<unsigned char>(r_val);
-    rgb_byte_array[base_idx + 1] = static_cast<unsigned char>(g_val);
-    rgb_byte_array[base_idx + 2] = static_cast<unsigned char>(b_val);
-}
-
 RGBPixel_vec ycbcr_to_rgb(__m128& y_float_vec , int u, int v) {
     RGBPixel_vec rgb;
     float v_float = static_cast<float>(v) - 128.0f;
@@ -166,6 +153,19 @@ std::vector<unsigned char> __convert_yuv420p_planes_to_rgb_bytes(
     return rgb_byte_array;
 }
 
+
+void store_single_pixel_raw(
+    std::vector<unsigned char>& rgb_byte_array,
+    int r_val,
+    int g_val,
+    int b_val,
+    int base_idx
+) {
+    // 调用者负责边界检查 本函数不负责
+    rgb_byte_array[base_idx + 0] = static_cast<unsigned char>(r_val);
+    rgb_byte_array[base_idx + 1] = static_cast<unsigned char>(g_val);
+    rgb_byte_array[base_idx + 2] = static_cast<unsigned char>(b_val);
+}
 
 extern "C" {
     void yuv420p_to_rgb_conversion_c(
